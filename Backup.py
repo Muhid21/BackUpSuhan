@@ -3,6 +3,12 @@ import zipfile
 from datetime import datetime
 import tkinter as tk
 from tkinter import filedialog, messagebox
+import requests
+
+# Token del bot de Telegram
+TELEGRAM_BOT_TOKEN = "7472742194:AAEH6qkPQW5BYZSeWuYXZeaIcN0y15tWlNU"
+# ID del chat o grupo de Telegram
+TELEGRAM_CHAT_ID = "7472742194"
 
 def crear_copia_seguridad(origen, destino, nombre):
     if not os.path.exists(origen):
@@ -20,7 +26,9 @@ def crear_copia_seguridad(origen, destino, nombre):
                     file_path = os.path.join(root, file)
                     relative_path = os.path.relpath(file_path, origen)
                     zip_file.write(file_path, relative_path)
-        messagebox.showinfo("Éxito", f'Copia de seguridad creada en:\n{ruta_zip}')
+        mensaje = f'Copia de seguridad creada en:\n{ruta_zip}'
+        enviar_mensaje_telegram(mensaje)
+        messagebox.showinfo("Éxito", mensaje)
     except Exception as e:
         messagebox.showerror("Error", f'¡Hubo un error al crear la copia de seguridad: {e}')
 
@@ -38,6 +46,11 @@ def iniciar_copia_seguridad():
         messagebox.showerror("Error", "¡Por favor, ingresa un nombre para la copia de seguridad!")
         return
     crear_copia_seguridad(origen, destino, nombre)
+
+def enviar_mensaje_telegram(mensaje):
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    params = {"chat_id": TELEGRAM_CHAT_ID, "text": mensaje}
+    requests.post(url, params=params)
 
 ventana = tk.Tk()
 ventana.title("Copia de Seguridad en ZIP")
@@ -62,5 +75,3 @@ boton_iniciar = tk.Button(ventana, text="Iniciar Copia de Seguridad", command=in
 boton_iniciar.grid(row=3, columnspan=3, padx=10, pady=20)
 
 ventana.mainloop()
-
-
