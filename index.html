@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copia de Seguridad</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Copia de Seguridad</h1>
+        <form method="POST" action="/backup">
+            <div class="form-group">
+                <label for="origen">Carpeta de Origen:</label>
+                <input type="text" class="form-control" id="origen" name="origen" required>
+            </div>
+            <div class="form-group">
+                <label for="destino">Carpeta de Destino:</label>
+                <input type="text" class="form-control" id="destino" name="destino" required>
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre de la Copia de Seguridad:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Iniciar Copia de Seguridad</button>
+        </form>
+        <div id="message"></div>
+    </div>
+</body>
+</html>
